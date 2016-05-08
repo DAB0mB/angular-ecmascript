@@ -1,12 +1,7 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Filter() {}
-
-Utils.class(Filter, Injectable, {
-  decorate: function() {
+export default class Filter extends Injectable {
+  filter() {
     throw Error('Filter#filter() must be implemented');
   }
-});
-
-module.exports = Filter;
+}

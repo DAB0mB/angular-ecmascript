@@ -1,12 +1,10 @@
-module.exports = {
-  Injectable: require('./injectable'),
-  Directive: require('./directive'),
-  Controller: require('./controller'),
-  Filter: require('./filter'),
-  Config: require('./config'),
-  Factory: require('./factory'),
-  Service: require('./service'),
-  Provider: require('./provider'),
-  Runner: require('./runner'),
-  Decorator: require('./decorator')
-};
+export Injectable from './injectable';
+export Directive from './directive';
+export Controller from './controller';
+export Filter from './filter';
+export Config from './config';
+export Factory from './factory';
+export Service from './service';
+export Provider from './provider';
+export Runner from './runner';
+export Decorator from './decorator';

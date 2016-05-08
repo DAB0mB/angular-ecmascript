@@ -1,12 +1,7 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Runner() {}
-
-Utils.class(Runner, Injectable, {
-  decorate: function() {
+export default class Runner extends Injectable {
+  run() {
     throw Error('Runner#run() must be implemented');
   }
-});
-
-module.exports = Runner;
+}

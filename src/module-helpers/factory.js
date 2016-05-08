@@ -1,12 +1,7 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Factory() {}
-
-Utils.class(Factory, Injectable, {
-  decorate: function() {
+export default class Factory extends Injectable {
+  create() {
     throw Error('Factory#create() must be implemented');
   }
-});
-
-module.exports = Factory;
+}

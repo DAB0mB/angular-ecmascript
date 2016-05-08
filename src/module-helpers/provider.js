@@ -1,12 +1,7 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Provider() {}
-
-Utils.class(Provider, Injectable, {
-  $get: function() {
+export default class Provider extends Injectable {
+  $get() {
     throw Error('Provider#$get() must be implemented');
   }
-});
-
-module.exports = Provider;
+}

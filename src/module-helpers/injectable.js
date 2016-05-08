@@ -1,10 +1,7 @@
-function Injectable() {
-  var self = this;
-  var args = arguments;
-
-  self.constructor.$inject.forEach(function(name, i) {
-    self[name] = args[i];
-  });
+export default class Injectable {
+  constructor(...args) {
+    this.constructor.$inject.forEach((name, i) => {
+      this[name] = args[i];
+    });
+  }
 }
-
-module.exports = Injectable;

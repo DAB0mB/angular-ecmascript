@@ -1,17 +1,15 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
+import * as Utils from '../utils';
 
-function Controller() {
-  Injectable.apply(this, arguments);
+export default class Controller extends Injectable {
+  constructor(...args) {
+    super(...args);
 
-  var createViewModel = this.$scope &&
-    (this.$scope.$viewModel || this.$scope.viewModel);
+    const createViewModel = this.$scope &&
+      (this.$scope.$viewModel || this.$scope.viewModel);
 
-  if (Utils.isFunction(createViewModel)) {
-    createViewModel.call(this.$scope, this);
+    if (Utils.isFunction(createViewModel)) {
+      createViewModel.call(this.$scope, this);
+    }
   }
 }
-
-Utils.class(Controller, Injectable);
-
-module.exports = Controller;

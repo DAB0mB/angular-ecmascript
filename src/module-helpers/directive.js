@@ -1,12 +1,7 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Directive() {}
-
-Utils.class(Directive, Injectable, {
-  compile: function() {
+export default class Directive extends Injectable {
+  compile() {
     return this.link.bind(this);
   }
-});
-
-module.exports = Directive;
+}

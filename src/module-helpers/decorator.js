@@ -1,12 +1,7 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Decorator() {}
-
-Utils.class(Decorator, Injectable, {
-  decorate: function() {
+export default class Decorator extends Injectable {
+  decorate() {
     throw Error('Decorator#decorate() must be implemented');
   }
-});
-
-module.exports = Decorator;
+}

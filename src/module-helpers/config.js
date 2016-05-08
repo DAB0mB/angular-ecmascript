@@ -1,12 +1,7 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Config() {}
-
-Utils.class(Config, Injectable, {
-  decorate: function() {
+export default class Config extends Injectable {
+  configure() {
     throw Error('Config#configure() must be implemented');
   }
-});
-
-module.exports = Config;
+}

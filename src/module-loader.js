@@ -1,19 +1,17 @@
-var Angular = require('angular');
-var Helpers = require('./module-helpers');
-var Utils = require('./utils');
+import Angular from 'angular';
+import * as Helpers from './module-helpers';
+import * as Utils from './utils';
 
-function Loader(ngModule, dependencies) {
-  if (Utils.isString(ngModule)) {
-    ngModule = Angular.module(module, dependencies);
+export default class Loader {
+  constructor(ngModule, dependencies) {
+    if (Utils.isString(ngModule)) {
+      ngModule = Angular.module(ngModule, dependencies);
+    }
+
+    this.module = ngModule;
   }
 
-  this.module = ngModule;
-}
-
-Utils.class(Loader, {
-  load: function(Helper) {
-    var args = Utils.toArray(arguments).slice(1);
-
+  load(Helper, ...args) {
     if (Utils.isFunction(Helper)) {
       var proto = Helper.prototype;
       Helper.$name = Helper.$name || Helper.name;
@@ -48,15 +46,15 @@ Utils.class(Loader, {
     }
 
     return this;
-  },
+  }
 
   _loadProvider(Provider) {
     this.module.provider(Provider.$name, Provider);
-  },
+  }
 
   _loadService(Service) {
     this.module.service(Service.$name, Service)
-  },
+  }
 
   _loadController(Controller) {
     var $inject = Controller.$inject;
@@ -66,7 +64,7 @@ Utils.class(Loader, {
     }
 
     this.module.controller(Controller.$name, Controller);
-  },
+  }
 
   _loadDirective(Directive) {
     function helper() {
@@ -75,7 +73,7 @@ Utils.class(Loader, {
 
     helper.$inject = Directive.$inject;
     this.module.directive(Directive.$name, helper);
-  },
+  }
 
   _loadDecorator(Decorator) {
     function helper() {
@@ -85,7 +83,7 @@ Utils.class(Loader, {
 
     helper.$inject = Decorator.$inject;
     this.module.decorator(Decorator.$name, helper);
-  },
+  }
 
   _loadFactory(Factory) {
     function helper() {
@@ -95,7 +93,7 @@ Utils.class(Loader, {
 
     helper.$inject = Factory.$inject;
     this.module.factory(Factory.$name, helper);
-  },
+  }
 
   _loadFilter(Filter) {
     function helper() {
@@ -105,7 +103,7 @@ Utils.class(Loader, {
 
     helper.$inject = Filter.$inject;
     this.module.filter(Filter.$name, helper);
-  },
+  }
 
   _loadConfig(Config) {
     function helper() {
@@ -115,7 +113,7 @@ Utils.class(Loader, {
 
     helper.$inject = Config.$inject;
     this.module.config(helper);
-  },
+  }
 
   _loadRunner(Runner) {
     function helper() {
@@ -126,6 +124,4 @@ Utils.class(Loader, {
     helper.$inject = Runner.$inject;
     this.module.run(helper);
   }
-});
-
-module.exports = Loader;
+}

@@ -1,5 +1,5 @@
 import Angular from 'angular';
-import Helpers from 'angular-ecmascript/module-helpers';
+import * as Helpers from 'angular-ecmascript/module-helpers';
 import Loader from 'angular-ecmascript/module-loader';
 
 describe('Loader', () => {

@@ -1,8 +1,3 @@
-var Injectable = require('./injectable');
-var Utils = require('../utils');
+import Injectable from './injectable';
 
-function Service() {}
-
-Utils.class(Service, Injectable);
-
-module.exports = Service;
+export default class Service extends Injectable {}
