@@ -69,62 +69,62 @@ Utils.class(Loader, {
   },
 
   _loadDirective(Directive) {
-    function handler() {
+    function helper() {
       return new Directive(...arguments);
     }
 
-    handler.$inject = Directive.$inject;
-    this.module.directive(Directive.$name, handler);
+    helper.$inject = Directive.$inject;
+    this.module.directive(Directive.$name, helper);
   },
 
   _loadDecorator(Decorator) {
-    function handler() {
+    function helper() {
       const decorator = new Decorator(...arguments);
       return decorator.decorate.bind(decorator);
     }
 
-    handler.$inject = Decorator.$inject;
-    this.module.decorator(Decorator.$name, handler);
+    helper.$inject = Decorator.$inject;
+    this.module.decorator(Decorator.$name, helper);
   },
 
   _loadFactory(Factory) {
-    function handler() {
+    function helper() {
       const factory = new Factory(...arguments);
       return factory.create.bind(factory);
     }
 
-    handler.$inject = Factory.$inject;
-    this.module.factory(Factory.$name, handler);
+    helper.$inject = Factory.$inject;
+    this.module.factory(Factory.$name, helper);
   },
 
   _loadFilter(Filter) {
-    function handler() {
+    function helper() {
       const filter = new Filter(...arguments);
       return filter.filter.bind(filter);
     }
 
-    handler.$inject = Filter.$inject;
-    this.module.filter(Filter.$name, handler);
+    helper.$inject = Filter.$inject;
+    this.module.filter(Filter.$name, helper);
   },
 
   _loadConfig(Config) {
-    function handler() {
+    function helper() {
       const config = new Config(...arguments);
       return config.configure();
     }
 
-    handler.$inject = Config.$inject;
-    this.module.config(handler);
+    helper.$inject = Config.$inject;
+    this.module.config(helper);
   },
 
   _loadRunner(Runner) {
-    function handler() {
+    function helper() {
       const runner = new Runner(...arguments);
       return runner.run();
     }
 
-    handler.$inject = Runner.$inject;
-    this.module.run(handler);
+    helper.$inject = Runner.$inject;
+    this.module.run(helper);
   }
 });
 

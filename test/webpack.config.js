@@ -20,7 +20,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js'],
-    aliases: {
+    alias: {
       'angular-ecmascript': __dirname + '/..'
     }
   }
