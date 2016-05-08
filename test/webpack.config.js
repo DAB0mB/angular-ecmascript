@@ -19,9 +19,7 @@ module.exports = {
     }]
   },
   resolve: {
-    extensions: ['', '.js'],
-    alias: {
-      'angular-ecmascript': __dirname + '/..'
-    }
+    moduleDirectories: ['lib'],
+    extensions: ['', '.js']
   }
 };

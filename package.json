@@ -7,9 +7,12 @@
     "url": "https://github.com/DAB0mB/angular-ecmascript.git"
   },
   "scripts": {
+    "build": "babel src/ -d dist/ --source-maps",
+    "build:watch": "babel src/ -d dist/ --source-maps --watch",
     "test": "chromium-browser ./test/index.html",
-    "test:build": "webpack --config ./test/webpack.config.js",
-    "test:build:watch": "webpack --config ./test/webpack.config.js --watch"
+    "test:build": "npm run build && webpack --config ./test/webpack.config.js",
+    "test:build:watch": "npm run build:watch & webpack --config ./test/webpack.config.js --watch",
+    "postinstall": "npm run build"
   },
   "peerDependencies": {
     "angular": "^1.5.0"
@@ -17,6 +20,7 @@
   "devDependencies": {
     "angular": "^1.5.0",
     "babel": "^6.5.2",
+    "babel-cli": "^6.8.0",
     "babel-core": "^6.7.6",
     "babel-loader": "^6.2.4",
     "babel-plugin-add-module-exports": "^0.1.2",
