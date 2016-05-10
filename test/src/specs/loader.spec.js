@@ -1,66 +1,25 @@
 import Angular from 'angular';
-import * as Helpers from 'angular-ecmascript/module-helpers';
 import Loader from 'angular-ecmascript/module-loader';
 
-describe('Loader', () => {
-  let testModule;
-  let loader;
+describe('Loader', function() {
+  it('should create a new module if not specified', function() {
+    spyOn(Angular, 'module');
 
-  beforeEach(() => {
-    testModule = Angular.module('angular-ecmascript-test', []);
-    loader = new Loader(testModule);
+    const moduleName = 'custom-module';
+    const moduleDeps = ['module1', 'module2'];
+    const loader = new Loader(moduleName, moduleDeps);
+    const definition = Angular.module.calls.mostRecent()
+
+    expect(definition.args).toEqual([moduleName, moduleDeps]);
   });
 
-  describe('#load()', () => {
-    beforeEach(() => {
-      spyOn(testModule, 'provider').and.callThrough();
-    });
+  it('should load a custom helper given a string', function() {
+    this.module.helper = jasmine.createSpy('helper');
+    const helper = Angular.noop;
 
-    fdescribe('given Provider', () => {
-      it('should load a provider helper', () => {
-        class TestProvider extends Helpers.Provider {
-          static $inject = ['$dep1', '$dep2', '$dep3']
+    this.loader.load('helper', helper);
+    const definition = this.module.helper.calls.mostRecent();
 
-          $get() {
-          }
-        }
-
-        loader.load(TestProvider);
-
-        const definition = testModule.provider.calls.mostRecent();
-        const [name, helper] = definition.args;
-
-        expect(name).toEqual('TestProvider');
-        expect(helper).toEqual(TestProvider);
-      });
-    });
-
-    describe('given Service', () => {
-
-    });
-
-    describe('given Controller', () => {
-
-    });
-
-    describe('given Directive', () => {
-
-    });
-
-    describe('given Decorator', () => {
-
-    });
-
-    describe('given Factory', () => {
-
-    });
-
-    describe('given Config', () => {
-
-    });
-
-    describe('given Runner', () => {
-
-    });
+    expect(definition.args).toEqual([helper]);
   });
 });

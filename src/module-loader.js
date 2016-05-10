@@ -13,51 +13,51 @@ export default class Loader {
 
   load(Helper, ...args) {
     if (Utils.isFunction(Helper)) {
-      var proto = Helper.prototype;
+      const proto = Helper.prototype;
       Helper.$name = Helper.$name || Helper.name;
       Helper.$inject = Helper.$inject || [];
 
       if (proto instanceof Helpers.Provider)
-        this._loadProvider(Helper);
+        this.loadProvider(Helper);
       else if (proto instanceof Helpers.Service)
-        this._loadService(Helper);
+        this.loadService(Helper);
       else if (proto instanceof Helpers.Controller)
-        this._loadController(Helper);
+        this.loadController(Helper);
       else if (proto instanceof Helpers.Directive)
-        this._loadDirective(Helper);
+        this.loadDirective(Helper);
       else if (proto instanceof Helpers.Decorator)
-        this._loadDecorator(Helper);
+        this.loadDecorator(Helper);
       else if (proto instanceof Helpers.Factory)
-        this._loadFactory(Helper);
+        this.loadFactory(Helper);
       else if (proto instanceof Helpers.Filter)
-        this._loadFilter(Helper);
+        this.loadFilter(Helper);
       else if (proto instanceof Helpers.Config)
-        this._loadConfig(Helper);
+        this.loadConfig(Helper);
       else if (proto instanceof Helpers.Runner)
-        this._loadRunner(Helper);
+        this.loadRunner(Helper);
       else
-        throw Error("can't load unknown module-helper");
+        throw Error('can\'t load unknown module-helper');
     }
     else if (Utils.isString(Helper)) {
-      this.module[Helper].apply(this.module, args);
+      this.module::this.module[Helper](...args);
     }
     else {
-      throw Error("'Helper' must be a function or a string");
+      throw Error('`Helper` must be a function or a string');
     }
 
     return this;
   }
 
-  _loadProvider(Provider) {
+  loadProvider(Provider) {
     this.module.provider(Provider.$name, Provider);
   }
 
-  _loadService(Service) {
+  loadService(Service) {
     this.module.service(Service.$name, Service)
   }
 
-  _loadController(Controller) {
-    var $inject = Controller.$inject;
+  loadController(Controller) {
+    const $inject = Controller.$inject;
 
     if (!Utils.hasValue($inject, '$scope')) {
       $inject.unshift('$scope');
@@ -66,48 +66,53 @@ export default class Loader {
     this.module.controller(Controller.$name, Controller);
   }
 
-  _loadDirective(Directive) {
-    function helper() {
-      return new Directive(...arguments);
+  loadDirective(Directive) {
+    function helper(...args) {
+      return new Directive(...args);
     }
 
     helper.$inject = Directive.$inject;
     this.module.directive(Directive.$name, helper);
   }
 
-  _loadDecorator(Decorator) {
-    function helper() {
-      const decorator = new Decorator(...arguments);
-      return decorator.decorate.bind(decorator);
+  loadDecorator(Decorator) {
+    function helper(...args) {
+      const decorator = new Decorator(...args);
+      return decorator::decorator.decorate;
     }
 
-    helper.$inject = Decorator.$inject;
+    const $inject = Decorator.$inject;
+
+    if (!Utils.hasValue($inject, '$delegate')) {
+      $inject.unshift('$delegate');
+    }
+
     this.module.decorator(Decorator.$name, helper);
   }
 
-  _loadFactory(Factory) {
-    function helper() {
-      const factory = new Factory(...arguments);
-      return factory.create.bind(factory);
+  loadFactory(Factory) {
+    function helper(...args) {
+      const factory = new Factory(...args);
+      return factory::factory.create;
     }
 
     helper.$inject = Factory.$inject;
     this.module.factory(Factory.$name, helper);
   }
 
-  _loadFilter(Filter) {
-    function helper() {
-      const filter = new Filter(...arguments);
-      return filter.filter.bind(filter);
+  loadFilter(Filter) {
+    function helper(...args) {
+      const filter = new Filter(...args);
+      return filter::filter.filter;
     }
 
     helper.$inject = Filter.$inject;
     this.module.filter(Filter.$name, helper);
   }
 
-  _loadConfig(Config) {
-    function helper() {
-      const config = new Config(...arguments);
+  loadConfig(Config) {
+    function helper(...args) {
+      const config = new Config(...args);
       return config.configure();
     }
 
@@ -115,9 +120,9 @@ export default class Loader {
     this.module.config(helper);
   }
 
-  _loadRunner(Runner) {
-    function helper() {
-      const runner = new Runner(...arguments);
+  loadRunner(Runner) {
+    function helper(...args) {
+      const runner = new Runner(...args);
       return runner.run();
     }
 

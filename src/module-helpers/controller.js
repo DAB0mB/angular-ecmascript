@@ -9,7 +9,7 @@ export default class Controller extends Injectable {
       (this.$scope.$viewModel || this.$scope.viewModel);
 
     if (Utils.isFunction(createViewModel)) {
-      createViewModel.call(this.$scope, this);
+      this.$scope::createViewModel(this);
     }
   }
 }

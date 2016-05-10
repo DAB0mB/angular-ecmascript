@@ -9,7 +9,7 @@
   "scripts": {
     "build": "babel src/ -d dist/ --source-maps",
     "build:watch": "babel src/ -d dist/ --source-maps --watch",
-    "test": "chromium-browser ./test/index.html",
+    "test": "xdg-open ./test/index.html",
     "test:build": "npm run build && webpack --config ./test/webpack.config.js",
     "test:build:watch": "npm run build:watch & webpack --config ./test/webpack.config.js --watch",
     "postinstall": "npm run build"
