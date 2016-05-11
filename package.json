@@ -1,6 +1,6 @@
 {
   "name": "angular-ecmascript",
-  "description": "Write angular module-helpers using es6's new class system",
+  "description": "Build an AngularJS app using ES6's class system",
   "version": "0.0.1",
   "repository": {
     "type": "git",
