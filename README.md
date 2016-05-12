@@ -25,7 +25,7 @@ Each helper can be defined with a static `$inject` property which will be respon
 import { Service, Controller } from 'angular-ecmascript/module-helpers';
 
 class DateService extends Service {
-  $name = '$date'
+  static $name = '$date'
 
   now() {
     return new Date().getTime();
@@ -33,7 +33,7 @@ class DateService extends Service {
 }
 
 class MyController extends Controller {
-  $inject = ['$date']
+  static $inject = ['$date']
 
   constructor(...args) {
     super(...args);
