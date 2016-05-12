@@ -92,13 +92,14 @@ Used to define a new [service](https://docs.angularjs.org/guide/services).
 import { Service } from 'angular-ecmascript/module-helpers';
 
 class DateService extends Service {
-  $name = '$date'
+  static $name = '$date'
 
   now() {
     return new Date().getTime();
   }
 }
 ```
+
 ### Factory
 
 Used to define a new `factory`.
@@ -109,7 +110,7 @@ Used to define a new `factory`.
 import { Factory } from 'angular-ecmascript/module-helpers';
 
 class MomentFactory extends Factory {
-  $name = 'now'
+  static $name = 'now'
 
   create() {
     return new Date().getTime();
@@ -166,6 +167,7 @@ Used to define a new [decorator](https://docs.angularjs.org/guide/decorators).
 
 - `$delegate` will be injected automatically so no need to specify it.
 - Note that the `decorate` method must be implemented, otherwise an error will be thrown during load time.
+- No need to return the `$delegate` object, it should be handled automatically.
 
 ```js
 import { Decorator } from 'angular-ecmascript/module-helpers';
@@ -179,7 +181,6 @@ class MyDecorator extends Decorator {
 
   decorate() {
     this.$delegate.aHelpfulAddition = this.helperFn;
-    return this.$delegate;
   }
 }
 ```
@@ -217,11 +218,57 @@ Used to define a new `config`.
 
 - Note that the `configure` method must be implemented, otherwise an error will be thrown during load time.
 
+```js
+import { Config } from 'angular-ecmascript/module-helpers';
+
+class RoutesCfg extends Config {
+  static $inject = ['$routeProvider']
+
+  constructor(...args) {
+    super(...args);
+
+    this.fetchUser = ['http', this::this.fetchUser];
+  }
+
+  configure() {
+    this.$routeProvider
+      .when('/', {
+        template: '<home user="$resolve.user"></home>',
+        resolve: {
+          user: this.fetchUser
+        }
+      });
+  }
+
+  fetchUser($http) {
+    return $http.get('...');
+  }
+}
+```
+
 ### Runner
 
 Used to define a new `run block`.
 
 - Note that the `run` method must be implemented, otherwise an error will be thrown during load time.
+
+```js
+import { Runner } from 'angular-meteor/module-helpers';
+
+class RoutesRunner extends Runner {
+  static $inject = ['$rootScope', '$state']
+
+  run() {
+    this.$rootScope.$on('$stateChangeError', (...args) => {
+      const [,,, err] = args;
+
+      if (err === 'AUTH_REQUIRED') {
+        this.$state.go('login');
+      }
+    });
+  }
+}
+```
 
 ## Download
 

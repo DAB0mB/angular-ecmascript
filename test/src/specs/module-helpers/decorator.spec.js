@@ -7,7 +7,6 @@ describe('Decorator', function() {
 
   it('should load a decorator helper', function() {
     const $delegate = {};
-    const expectedResult = {};
     const ctorSpy = jasmine.createSpy('ctor');
     const methodSpy = jasmine.createSpy('method');
 
@@ -21,7 +20,6 @@ describe('Decorator', function() {
 
       decorate(...args) {
         this::methodSpy(...args);
-        return expectedResult;
       }
     }
 
@@ -40,12 +38,11 @@ describe('Decorator', function() {
     expect(expectedDecorator).toEqual(jasmine.any(Decorator));
     expect(decorator).toEqual(expectedDecorator);
     expect(decorator.$delegate).toEqual($delegate);
-    expect(result).toEqual(expectedResult);
+    expect(result).toEqual($delegate);
   });
 
   it('should load a decorator with a custom name', function() {
     const $delegate = {};
-    const expectedResult = {};
     const ctorSpy = jasmine.createSpy('ctor');
     const methodSpy = jasmine.createSpy('method');
 
@@ -60,7 +57,6 @@ describe('Decorator', function() {
 
       decorate(...args) {
         this::methodSpy(...args);
-        return expectedResult;
       }
     }
 
@@ -78,14 +74,12 @@ describe('Decorator', function() {
 
     expect(expectedDecorator).toEqual(jasmine.any(TestDecorator));
     expect(decorator).toEqual(expectedDecorator);
-    expect(decorator.$delegate).toEqual($delegate);
-    expect(result).toEqual(expectedResult);
+    expect(result).toEqual($delegate);
   });
 
   it('should inject a `$delegate` dependency by default', function() {
     const $delegate = {};
     const $dep = {};
-    const expectedResult = {};
     const ctorSpy = jasmine.createSpy('ctor');
     const methodSpy = jasmine.createSpy('method');
 
@@ -99,7 +93,6 @@ describe('Decorator', function() {
 
       decorate(...args) {
         this::methodSpy(...args);
-        return expectedResult;
       }
     }
 
@@ -119,6 +112,6 @@ describe('Decorator', function() {
     expect(expectedDecorator).toEqual(jasmine.any(TestDecorator));
     expect(decorator).toEqual(expectedDecorator);
     expect(decorator.$dep).toEqual($dep);
-    expect(result).toEqual(expectedResult);
+    expect(result).toEqual($delegate);
   });
 });

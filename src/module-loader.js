@@ -67,7 +67,7 @@ export default class Loader {
   }
 
   loadDirective(Directive) {
-    function helper(...args) {
+    const helper = (...args) => {
       return new Directive(...args);
     }
 
@@ -76,12 +76,18 @@ export default class Loader {
   }
 
   loadDecorator(Decorator) {
-    function helper(...args) {
-      const decorator = new Decorator(...args);
-      return decorator::decorator.decorate;
+    let decorator;
+    const $inject = Decorator.$inject;
+
+    const helper = (...args) => {
+      decorator = new Decorator(...args);
+      return decorate;
     }
 
-    const $inject = Decorator.$inject;
+    const decorate = (...args) => {
+      decorator.decorate(...args);
+      return decorator.$delegate;
+    }
 
     if (!Utils.hasValue($inject, '$delegate')) {
       $inject.unshift('$delegate');
@@ -91,7 +97,7 @@ export default class Loader {
   }
 
   loadFactory(Factory) {
-    function helper(...args) {
+    const helper = (...args) => {
       const factory = new Factory(...args);
       return factory::factory.create;
     }
@@ -101,7 +107,7 @@ export default class Loader {
   }
 
   loadFilter(Filter) {
-    function helper(...args) {
+    const helper = (...args) => {
       const filter = new Filter(...args);
       return filter::filter.filter;
     }
@@ -111,7 +117,7 @@ export default class Loader {
   }
 
   loadConfig(Config) {
-    function helper(...args) {
+    const helper = (...args) => {
       const config = new Config(...args);
       return config.configure();
     }
@@ -121,7 +127,7 @@ export default class Loader {
   }
 
   loadRunner(Runner) {
-    function helper(...args) {
+    const helper = (...args) => {
       const runner = new Runner(...args);
       return runner.run();
     }
