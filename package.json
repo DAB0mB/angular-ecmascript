@@ -1,7 +1,7 @@
 {
   "name": "angular-ecmascript",
   "description": "Build an AngularJS app using ES6's class system",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "repository": {
     "type": "git",
     "url": "https://github.com/DAB0mB/angular-ecmascript.git"
