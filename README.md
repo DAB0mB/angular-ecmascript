@@ -55,18 +55,22 @@ import MyDirective from './directives/my.directive';
 import MyService from './services/my.service';
 
 // app
-export const App = Angular.module('my-app', [
+App = Angular.module('my-app', [
   'module1',
   'module2',
   'module3'
 ]);
 
 // loader
-export const loader = new Loader(App)
+new Loader(App)
   .load(MyCtrl)
   .load(MyDirective)
   .load(MyService);
 ```
+
+- `Loader()` can take a module name as the first argument and an optional dependencies array if you'd like to load a module by name.
+- `Loader.load()` can take an array of several module-helpers instead of chaining them one-by-one.
+- `Loader.load()` can take a string as the first argument representing the provider type and its value as the second argument, just like the [$provide](https://docs.angularjs.org/api/auto/service/$provide) service.
 
 ### Provider
 

@@ -20,6 +20,10 @@ export function isHash(obj) {
   return obj.__proto__ === Object.prototype;
 }
 
+export function isArray(arr) {
+  return arr instanceof Array;
+}
+
 export function isString(str) {
   return typeof str == 'string';
 }

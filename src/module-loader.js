@@ -38,8 +38,11 @@ export default class Loader {
       else
         throw Error('can\'t load unknown module-helper');
     }
+    else if (Utils.isArray(Helper)) {
+      Helper.forEach(Helper => this.load(Helper));
+    }
     else if (Utils.isString(Helper)) {
-      this.module::this.module[Helper](...args);
+      this.module[Helper](...args);
     }
     else {
       throw Error('`Helper` must be a function or a string');
